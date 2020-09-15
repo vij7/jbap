@@ -11,6 +11,7 @@ class Company {
   String about = '';
   String isPremium;
   String isVerified;
+  String userDeviceID = '';
 
   Company(
       {this.userid,
@@ -23,7 +24,8 @@ class Company {
       this.location,
       this.logo,
       this.isPremium,
-      this.isVerified});
+      this.isVerified,
+      this.userDeviceID});
 
   factory Company.fromJson(Map<String, dynamic> json) {
     return Company(

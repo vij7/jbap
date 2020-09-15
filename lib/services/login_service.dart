@@ -90,6 +90,7 @@ class LoginService {
     var mapData = new Map();
     mapData["email"] = user.email;
     mapData["password"] = user.password;
+    mapData["devicetoken"] = user.userDeviceID;
 
     String jsonReg = json.encode(mapData);
     return jsonReg;

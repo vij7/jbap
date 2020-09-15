@@ -17,6 +17,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:jobapp/constants.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 Future<List<JobModel>> fetchPosts(http.Client client) async {
   final response =
@@ -74,6 +75,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   bool _isJobseeker = false;
   bool _isPremium = false;
   bool _isSearching = false;
@@ -85,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<JobModel> filteredJobs = List();
   List<User> filteredUsers = List();
   List<JobModel> salarySearchList = List();
+  String _message = '';
 
   void initState() {
     super.initState();
@@ -99,6 +103,52 @@ class _HomeScreenState extends State<HomeScreen> {
     cmyd.then((value) {
       companyinfo = value;
       companyID = value.userid;
+    });
+
+    getMessage();
+  }
+
+  void getMessage() {
+    _firebaseMessaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+      print('on message $message');
+      setState(() => _message = message["notification"]["title"]);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: ListTile(
+            title: Text(message['notification']['title']),
+            subtitle: Text(message['notification']['body']),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
+      );
+    }, onResume: (Map<String, dynamic> message) async {
+      print('on resume $message');
+      setState(() => _message = message["message"]["title"]);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: ListTile(
+            title: Text(_message),
+            subtitle: Text(message['message']['body']),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
+      );
+    }, onLaunch: (Map<String, dynamic> message) async {
+      print('on launch $message');
+      setState(() => _message = message["message"]["title"]);
     });
   }
 

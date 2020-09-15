@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "921477869157",
+    "firebase_url": "https://starwings-jobs.firebaseio.com",
+    "project_id": "starwings-jobs",
+    "storage_bucket": "starwings-jobs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921477869157:android:bb570add020260a8b2e08c",
+        "android_client_info": {
+          "package_name": "com.starwingjobs.jobapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921477869157-tvg2f7qra132j32hnf8bb22f3cc0c5bt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCpMM5D0hGFOW7B-Wjw-bp4tUIOp75b0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921477869157-tvg2f7qra132j32hnf8bb22f3cc0c5bt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

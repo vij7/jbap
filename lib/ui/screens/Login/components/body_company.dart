@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
@@ -32,9 +33,13 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  // DeviceInfoPlugin deviceInfo =
+  //     DeviceInfoPlugin(); // instantiate device info plugin
+  // AndroidDeviceInfo androidDeviceInfo;
 
   List<String> companyList;
   bool _obscureText = true;
+  String androidid;
 
   Company userDetails = new Company();
 
@@ -118,6 +123,27 @@ class _BodyState extends State<Body> {
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getDeviceinfo();
+  }
+
+  void getDeviceinfo() async {
+    // androidDeviceInfo = await deviceInfo
+    //     .androidInfo; // instantiate Android Device Infoformation
+    // setState(() {
+    //   androidid = androidDeviceInfo.androidId;
+    //   userDetails.userDeviceID = androidid;
+    // });
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    _firebaseMessaging.getToken().then((value) {
+      setState(() {
+        userDetails.userDeviceID = value;
+      });
     });
   }
 

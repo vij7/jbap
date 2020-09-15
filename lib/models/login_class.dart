@@ -20,6 +20,7 @@ class User {
   String resumeUrl = '';
   String category = '';
   String resumeName = '';
+  String userDeviceID = '';
 
   User(
       {this.userid,
@@ -42,7 +43,8 @@ class User {
       this.about,
       this.resumeUrl,
       this.category,
-      this.resumeName});
+      this.resumeName,
+      this.userDeviceID});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jobapp/constants.dart';
@@ -34,10 +35,14 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  // DeviceInfoPlugin deviceInfo =
+  //     DeviceInfoPlugin(); // instantiate device info plugin
+  // AndroidDeviceInfo androidDeviceInfo;
 
   List<User> userList;
   bool _obscureText = true;
   bool _isLoading = false;
+  // String androidid;
 
   User userDetails = new User();
 
@@ -66,6 +71,7 @@ class _BodyState extends State<Body> {
       print('Form save called, newContact is now up to date...');
       print('Username: ${userDetails.email}');
       print('Password: ${userDetails.password}');
+      print('DeviceId: ${userDetails.userDeviceID}');
       print('========================================');
       print('Submitting to back end...');
       var loginService = new LoginService();
@@ -118,6 +124,27 @@ class _BodyState extends State<Body> {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getDeviceinfo();
+  }
+
+  void getDeviceinfo() async {
+    //androidDeviceInfo = await deviceInfo
+    //   .androidInfo; // instantiate Android Device Infoformation
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    _firebaseMessaging.getToken().then((value) {
+      setState(() {
+        userDetails.userDeviceID = value;
+      });
+    });
+    // setState(() {
+    //   androidid = androidDeviceInfo.androidId;
+    //   // userDetails.userDeviceID = androidid;
+    // });
   }
 
   @override
